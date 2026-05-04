@@ -13,25 +13,29 @@ const Globe3D = () => {
 
   return (
     <group>
-      <Float speed={4} rotationIntensity={0.5} floatIntensity={1}>
+      <Float speed={2} rotationIntensity={1} floatIntensity={1}>
         <Sphere ref={meshRef} args={[1, 64, 64]}>
           <MeshDistortMaterial
-            color="#0080ff"
+            color="#00d4ff"
             attach="material"
-            distort={0.3}
-            speed={2}
-            roughness={0}
-            metalness={1}
-            emissive="#0080ff"
-            emissiveIntensity={0.5}
+            distort={0.4}
+            speed={4}
+            roughness={0.1}
+            metalness={0.8}
+            emissive="#00d4ff"
+            emissiveIntensity={0.2}
           />
         </Sphere>
       </Float>
       
-      {/* Subtle ring around the globe */}
+      {/* Dynamic Grid Orbits */}
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[1.2, 1.25, 64]} />
-        <meshBasicMaterial color="#0080ff" transparent opacity={0.2} side={THREE.DoubleSide} />
+        <torusGeometry args={[1.3, 0.005, 16, 128]} />
+        <meshBasicMaterial color="#00d4ff" transparent opacity={0.3} />
+      </mesh>
+      <mesh rotation={[0, Math.PI / 2, 0]}>
+        <torusGeometry args={[1.4, 0.005, 16, 128]} />
+        <meshBasicMaterial color="#ffffff" transparent opacity={0.1} />
       </mesh>
     </group>
   );

@@ -67,10 +67,11 @@ const FloatingTextGroup = () => {
                     <Text
                         position={item.position}
                         rotation={item.rotation}
-                        fontSize={0.2}
-                        color="#0080ff"
+                        fontSize={0.15}
+                        color="#00d4ff"
                         transparent
-                        opacity={0.1}
+                        opacity={0.07}
+                        font="https://fonts.gstatic.com/s/spacegrotesk/v13/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj7oUXskPMBBSSJLm2E.woff"
                     >
                         {item.char}
                     </Text>

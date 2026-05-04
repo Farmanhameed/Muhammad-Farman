@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { 
   Linkedin, 
@@ -9,7 +9,10 @@ import {
   MapPin,
   Calendar,
   GraduationCap,
-  Award
+  Award,
+  Github,
+  Facebook as FacebookIcon,
+  Twitter
 } from 'lucide-react';
 import { cn } from './lib/utils';
 import { EXPERIENCES, TECH_STACK, CERTIFICATIONS } from './constants';
@@ -79,6 +82,25 @@ export default function App() {
     damping: 30,
     restDelta: 0.001
   });
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const handleWhatsAppRedirect = (e: React.FormEvent) => {
+    e.preventDefault();
+    const { name, email, message } = formData;
+    const phone = "+923456240550";
+    const text = `*New Inquiry from Portfolio*\n\n*Name:* ${name}\n*Email:* ${email}\n*Message:* ${message}`;
+    const whatsappUrl = `https://wa.me/${phone.replace('+', '')}?text=${encodeURIComponent(text)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
   return (
     <div className="relative">
@@ -331,8 +353,9 @@ export default function App() {
                       </div>
                     </motion.a>
                     <motion.a 
-                      href="https://linkedin.com/in/farman-hameed"
+                      href="https://www.linkedin.com/in/farman-hameed/"
                       target="_blank"
+                      rel="noopener noreferrer"
                       whileHover={{ y: -2 }}
                       className="flex items-center gap-6 group"
                     >
@@ -346,41 +369,72 @@ export default function App() {
                     </motion.a>
                 </div>
 
-                <form className="space-y-8">
+                <form className="space-y-8" onSubmit={handleWhatsAppRedirect}>
                   <div className="grid sm:grid-cols-2 gap-10">
                     <div className="space-y-2">
                        <label className="label-caps text-zinc-500">Name</label>
-                       <input type="text" className="w-full h-14 bg-transparent border-b border-zinc-800 focus:border-electric focus:outline-none transition-all pb-2 text-xl" />
+                       <input 
+                        type="text" 
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="w-full h-14 bg-transparent border-b border-zinc-800 focus:border-electric focus:outline-none transition-all pb-2 text-xl" 
+                       />
                     </div>
                     <div className="space-y-2">
                        <label className="label-caps text-zinc-500">Email</label>
-                       <input type="email" className="w-full h-14 bg-transparent border-b border-zinc-800 focus:border-electric focus:outline-none transition-all pb-2 text-xl" />
+                       <input 
+                        type="email" 
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="w-full h-14 bg-transparent border-b border-zinc-800 focus:border-electric focus:outline-none transition-all pb-2 text-xl" 
+                       />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <label className="label-caps text-zinc-500">Message</label>
-                    <textarea rows={4} className="w-full bg-transparent border-b border-zinc-800 focus:border-electric focus:outline-none transition-all pb-2 text-xl resize-none" />
+                    <textarea 
+                      name="message"
+                      rows={4} 
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-transparent border-b border-zinc-800 focus:border-electric focus:outline-none transition-all pb-2 text-xl resize-none" 
+                    />
                   </div>
                   <motion.button 
+                    type="submit"
                     whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.99 }}
                     className="px-12 py-5 bg-electric text-black font-bold uppercase text-xs tracking-widest hover:brightness-110 transition-all mt-6"
                   >
-                    Send Message
+                    Send to WhatsApp
                   </motion.button>
                 </form>
              </div>
           </div>
         </section>
 
-        <footer className="py-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+        <footer className="py-20 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-10">
           <div className="text-sm opacity-40">
-            © 2024 Muhammad Farman. All rights reserved.
+            © 2026 Muhammad Farman. Portfolio & Narrative Strategist.
           </div>
-          <div className="flex gap-6 opacity-60 text-xs font-mono uppercase tracking-widest">
-             <a href="#" className="hover:text-electric transition-colors">Twitter</a>
-             <a href="#" className="hover:text-electric transition-colors">Behance</a>
-             <a href="#" className="hover:text-electric transition-colors">GitHub</a>
+          <div className="flex flex-wrap justify-center gap-10">
+             <a href="https://x.com/farman_hameed1" target="_blank" rel="noopener noreferrer" className="label-caps text-zinc-500 hover:text-electric transition-colors flex items-center gap-2">
+               <Twitter className="w-3 h-3" /> X
+             </a>
+             <a href="https://www.facebook.com/farman.sherkhana" target="_blank" rel="noopener noreferrer" className="label-caps text-zinc-500 hover:text-electric transition-colors flex items-center gap-2">
+               <FacebookIcon className="w-3 h-3" /> Facebook
+             </a>
+             <a href="https://github.com/Farmanhameed" target="_blank" rel="noopener noreferrer" className="label-caps text-zinc-500 hover:text-electric transition-colors flex items-center gap-2">
+               <Github className="w-3 h-3" /> GitHub
+             </a>
+             <a href="https://www.linkedin.com/in/farman-hameed/" target="_blank" rel="noopener noreferrer" className="label-caps text-zinc-500 hover:text-electric transition-colors flex items-center gap-2">
+               <Linkedin className="w-3 h-3" /> LinkedIn
+             </a>
           </div>
         </footer>
 
